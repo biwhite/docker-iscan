@@ -9,13 +9,17 @@ docker build -t biwhite/iscan .
 ## RUN ##
 
 ```
-docker run --rm --name iscan -p 5900:5900 -e DISPLAY=:0 --device=/dev/bus/usb --device=/dev/usb/lp0 -e HOME=/root biwhite/iscan x11vnc :0 -forever -usepw -create
+docker run --rm --name iscan -p 5900:5900 -e DISPLAY=:0 --device=/dev/bus/usb --device=/dev/usb/lp0 -e HOME=/root biwhite/iscan x11vnc -forever -usepw -create
 ```
-Currently, it needs the printer to appear on /dev/usb/lp0 and be connected at container startup (or at least when iscan starts)
+
+Devices need passing through from /dev/ as needed.  The scanner should be connected prior to starting container, otherwise the devices do not exist in advance.
+
+Connect to VNC, password is ```1234```
 
 ## TODO ##
 
 - Resize X11 desktop or iscan window to be the same size
 - Map a volume and set working directory to particular path to ease file saving
-- Work out how to fire up the application when someone connects to VNC
-- Sometimes scans fail midway, need to work out why/how to fix
+- Scan connectivity seems unreliable.  Unsure if this is a docker problem, or physical hardware issue on my test setup!
+- Kill container or restart iscan, if iscan app is closed, otherwise left with empty vnc server
+
